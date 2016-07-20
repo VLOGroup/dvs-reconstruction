@@ -17,7 +17,7 @@ To compile this code, make sure you first install ImageUtilities with the `iugui
  - CMake >= 3.2
  - Qt >= 5.6
  - Boost (program_options, filesystem, system)
- - libcaer >=2.0
+ - libcaer >=2.0 (https://github.com/inilabs/libcaer)
  - DVS128 or DAVIS240 camera (can also load events from files)
 
  To compile the GUI and command-line utility:
@@ -28,7 +28,7 @@ cmake ..
 make -j6
  ~~~
 
- In the standard form, the application will compile to support the iniLabs DVS128. If you want to attach a DAVIS240 instead, uncomment L23 in `denoisingmainwindow.h` and re-compile.
+ Per default, the application will compile to support the iniLabs DVS128. If you want to attach a DAVIS240 instead, uncomment L23 in `denoisingmainwindow.h` and re-compile.
 
 ## Usage
 Launch `live_reconstruction_gui` to get to the main application which should look like this:
