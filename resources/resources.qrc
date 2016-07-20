@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>gpu4vision_logo.png</file>
+        <file>icg_logo.png</file>
+        <file>tu_logo.png</file>
+        <file>play.png</file>
+        <file>pause.png</file>
+        <file>fileopen.png</file>
+        <file>filesave.png</file>
+        <file>reset.png</file>
+        <file>camera.png</file>
+        <file>vlo_logo.png</file>
+        <file>filesaveevents.png</file>
+        <file>fileopenevents.png</file>
+    </qresource>
+</RCC>
