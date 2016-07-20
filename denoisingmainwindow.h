@@ -35,7 +35,7 @@ class DenoisingMainWindow : public QMainWindow
     void startDenoising();
     void stopDenoising();
     void startCamera();
-    void open();
+    void loadEvents();
     void loadState();
     void saveState();
     void saveEvents();

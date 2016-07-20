@@ -16,8 +16,8 @@
 
 DenoisingMainWindow::DenoisingMainWindow(QWidget *parent, std::vector<Event>& events) : QMainWindow(parent)
 {
-    flipud_ = true;
-    skip_initial_ = true;
+    flipud_ = false;
+    skip_initial_ = false;
 #ifdef DAVIS240
     int scale = 2;
     int width = 240;
@@ -130,10 +130,10 @@ DenoisingMainWindow::DenoisingMainWindow(QWidget *parent, std::vector<Event>& ev
     action_stop_ = new QAction(QIcon(":pause.png"),tr("S&top algorithm"),this);
     action_camera_ = new QAction(QIcon(":camera.png"),tr("St&art camera"),this);
     check_flipud_events_ = new QCheckBox("Flip U/D?");
-    check_flipud_events_->setChecked(true);
+    check_flipud_events_->setChecked(false);
     check_flipud_events_->setToolTip("Flip y-axis when loading a recorded sequence");
     check_skip_events_ = new QCheckBox("Skip initial on events?");
-    check_skip_events_->setChecked(true);
+    check_skip_events_->setChecked(false);
     check_skip_events_->setToolTip("Throw away the first ON events when loading a recorded sequence");
     check_debug_mode_ = new QCheckBox("Debug Mode?");
     check_debug_mode_->setChecked(false);
@@ -241,7 +241,7 @@ DenoisingMainWindow::DenoisingMainWindow(QWidget *parent, std::vector<Event>& ev
 
     // Menu Stuff
     action_open_ = new QAction(QIcon(":fileopenevents.png"),tr("&Load events from file"),this);
-    connect(action_open_,SIGNAL(triggered(bool)),this,SLOT(open()));
+    connect(action_open_,SIGNAL(triggered(bool)),this,SLOT(loadEvents()));
     action_load_state_ = new QAction(QIcon(":fileopen.png"),tr("L&oad initial state"),this);
     connect(action_load_state_,SIGNAL(triggered(bool)),this,SLOT(loadState()));
     action_save_state_ = new QAction(QIcon(":filesave.png"),tr("&Save current state"),this);
@@ -320,7 +320,7 @@ void DenoisingMainWindow::startCamera()
     startDenoising();
 }
 
-void DenoisingMainWindow::open()
+void DenoisingMainWindow::loadEvents()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Event File"), "", tr("Event Files (*.aer2 *.dat)"));
@@ -378,7 +378,7 @@ void DenoisingMainWindow::readevents(std::string filename,bool skip_events, bool
     QFileInfo info(filename.c_str());
     events_.clear();
     if(info.suffix()=="aer2") {
-        loadEvents(filename,events_,skip_events,flip_ud);
+        ::loadEvents(filename,events_,skip_events,flip_ud);
     } else if(info.suffix()=="dat"){ // read Bardow files
         Event temp_event;
         float first_timestamp=0;
