@@ -28,7 +28,7 @@ cmake ..
 make -j6
  ~~~
 
- Per default, the application will compile to support the iniLabs DVS128. If you want to attach a DAVIS240 instead, uncomment L23 in `denoisingmainwindow.h` and re-compile.
+ Per default, the application will compile to support the iniLabs DVS128. If you want to attach a DAVIS240 instead, set the CMake option `WITH_DAVIS`.
 
 ## Usage
 Launch `live_reconstruction_gui` to get to the main application which should look like this:

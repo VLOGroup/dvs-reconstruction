@@ -249,7 +249,7 @@ DenoisingMainWindow::DenoisingMainWindow(QWidget *parent, std::vector<Event>& ev
     action_save_events_ = new QAction(QIcon(":filesaveevents.png"),tr("Sa&ve events to file"),this);
     connect(action_save_events_,SIGNAL(triggered(bool)),this,SLOT(saveEvents()));
 #ifdef DAVIS240
-    action_snap_ = new QAction(QIcon(":play.png"),tr("Snap DAVIS frame"),this);
+    action_snap_ = new QAction(QIcon(":reset.png"),tr("Snap DAVIS frame"),this);
     connect(action_snap_,SIGNAL(triggered(bool)),camera_worker_,SLOT(snap(void)));
 #endif
     action_view_advanced_ = new QAction(tr("&Advanced options"),this);

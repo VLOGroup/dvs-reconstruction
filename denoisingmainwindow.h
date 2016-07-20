@@ -17,10 +17,11 @@
 #include "event.h"
 #include "iu/iugui.h"
 #include "denoisingworker.h"
-#include "dvscameraworker.h"
+#ifdef DAVIS240
 #include "daviscameraworker.h"
-
-//#define DAVIS240
+#else
+#include "dvscameraworker.h"
+#endif
 
 class DenoisingMainWindow : public QMainWindow
 {

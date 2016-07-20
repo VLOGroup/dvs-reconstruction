@@ -9,6 +9,7 @@ SET(CMAKE_MODULE_PATH ${OT_CMAKE_MODULE_PATH})
 #SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 #SET(CMAKE_BUILD_TYPE Release)
 OPTION(WITH_OPENMP "Build with Multiprocessor Support" ON)
+OPTION(WITH_DAVIS "Build with support for DAVIS240 instead of DVS128" OFF)
 if(WITH_OPENMP)
     # for openmp
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
@@ -20,12 +21,6 @@ else(WITH_OPENMP)
     set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "-G -keep")
     set(CMAKE_BUILD_TYPE Debug)
 endif(WITH_OPENMP)
-##-----------------------------------------------------------------------------
-## Compiler Flags
-if(WIN32)
-  SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:LIBCMT.lib /MDd")
-endif(WIN32)
-add_definitions("-std=c++11 -fpermissive")
 
 ##-----------------------------------------------------------------------------
 ## ImageUtilities
@@ -38,32 +33,15 @@ include_directories(${IMAGEUTILITIESLIGHT_INCLUDE_DIR})
 message(${IMAGEUTILITIESLIGHT_LIBRARIES})
 
 ##-----------------------------------------------------------------------------
-## OpenCV
-#FIND_PACKAGE(OpenCV REQUIRED)
-#INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
-#CUDA_INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
-#message("Found OpenCV Version: " ${OpenCV_VERSION})
-
-##-----------------------------------------------------------------------------
-## Additional opencv packages
-#find_package( OpenCV REQUIRED COMPONENTS opencv_calib3d)
-
-
-##-----------------------------------------------------------------------------
 ## Qt5
 set(CMAKE_AUTOMOC ON)
 find_package(Qt5Core)
 find_package(Qt5Widgets)
 find_package(Qt5OpenGL)
 qt5_add_resources(UI_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources/resources.qrc)
-#find_package(Qt5Xml)
-#include_directories(${Qt5Xml_INCLUDE_DIRS})
-#set(LIBQLVIEWER_LIB  /usr/local/lib/libQGLViewer.so)
-#find_package( OpenGL )
 
-#find_package(ITK REQUIRED)
-#include(${ITK_USE_FILE})
-
+##-----------------------------------------------------------------------------
+## Boost
 find_package(Boost COMPONENTS program_options filesystem system REQUIRED)
 
 SET(CUDA_FILES
@@ -89,15 +67,33 @@ SET ( GUI_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/live_denoise_gui.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/denoisingmainwindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/denoisingworker.cpp
-  #${CMAKE_CURRENT_SOURCE_DIR}/denoising.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/dvscameraworker.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/daviscameraworker.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/cnpy.cpp)
+if(WITH_DAVIS)
+  set (GUI_FILES
+       ${GUI_FILES}
+       ${CMAKE_CURRENT_SOURCE_DIR}/daviscameraworker.cpp)
+else(WITH_DAVIS)
+   set (GUI_FILES
+        ${GUI_FILES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/dvscameraworker.cpp)
+endif(WITH_DAVIS)
 
 SET (TEST_MAIN_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/denoise_test.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/cnpy.cpp
 )
+
+##-----------------------------------------------------------------------------
+## Compiler Flags
+if(WIN32)
+  SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:LIBCMT.lib /MDd")
+endif(WIN32)
+add_definitions("-std=c++11 -fpermissive")
+if(WITH_DAVIS)
+  add_definitions("-DDAVIS240")
+endif(WITH_DAVIS)
+
+
 link_directories(/usr/local/lib/x86_64-linux-gnu/) # libcaer
 #target_link_libraries(common ${OpenCV_LIBRARIES} ${OpenCV_LIBS})
 CUDA_ADD_EXECUTABLE(live_reconstruction_gui ${GUI_FILES} ${HEADER_FILES} ${UI_RESOURCES})
