@@ -1,4 +1,4 @@
-# DVS Denoising
+# DVS Reconstruction
 This repository provides software to our publication "Real-Time Intensity-Image Reconstruction for Event Cameras Using Manifold Regularisation", BMVC 2016.
 
 If you use this code please cite the following publication:

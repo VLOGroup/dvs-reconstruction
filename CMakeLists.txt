@@ -2,7 +2,7 @@
 # CUDA_SDK_ROOT_DIR
 # MATLAB_ROOT_DIR
 
-PROJECT(LIVE_DENOISE)
+PROJECT(LIVE_DVS_RECONSTRUCTION)
 cmake_minimum_required(VERSION 2.8)
 FILE(TO_CMAKE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/" OT_CMAKE_MODULE_PATH)
 SET(CMAKE_MODULE_PATH ${OT_CMAKE_MODULE_PATH})
@@ -64,8 +64,8 @@ endif(WIN32)
 target_link_libraries(common ${OpenCV_LIBRARIES} ${OpenCV_LIBS})
 
 SET ( GUI_FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/live_denoise_gui.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/denoisingmainwindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/live_reconstruction_gui.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/reconstructionmainwindow.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/denoisingworker.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/cnpy.cpp)
 if(WITH_DAVIS)

@@ -8,7 +8,7 @@
 
 #include "event.h"
 #include "scopedtimer.h"
-#include "denoisingmainwindow.h"
+#include "reconstructionmainwindow.h"
 
 int main(int argc, char**argv)
 {
@@ -19,7 +19,7 @@ int main(int argc, char**argv)
     // start main window
 
     QApplication app(argc, argv);
-    DenoisingMainWindow window(NULL,events);
+    ReconstructionMainWindow window(NULL,events);
     window.show();
 
     return app.exec();

@@ -1,4 +1,4 @@
-#include "denoisingmainwindow.h"
+#include "reconstructionmainwindow.h"
 #include <QGridLayout>
 #include <QLabel>
 #include <QSpacerItem>
@@ -14,7 +14,7 @@
 #include <fstream>
 #include "common.h"
 
-DenoisingMainWindow::DenoisingMainWindow(QWidget *parent, std::vector<Event>& events) : QMainWindow(parent)
+ReconstructionMainWindow::ReconstructionMainWindow(QWidget *parent, std::vector<Event>& events) : QMainWindow(parent)
 {
     flipud_ = false;
     skip_initial_ = false;
@@ -290,14 +290,14 @@ DenoisingMainWindow::DenoisingMainWindow(QWidget *parent, std::vector<Event>& ev
     setWindowIcon(QIcon(":vlo_logo.png"));
 }
 
-DenoisingMainWindow::~DenoisingMainWindow()
+ReconstructionMainWindow::~ReconstructionMainWindow()
 {
     stopDenoising();
     denoise_worker_->wait();
     camera_worker_->wait();
 }
 
-void DenoisingMainWindow::startDenoising()
+void ReconstructionMainWindow::startDenoising()
 {
     denoise_worker_->stop();
     if(events_.empty()) { // start camera thread
@@ -308,19 +308,19 @@ void DenoisingMainWindow::startDenoising()
     denoise_worker_->start();
 }
 
-void DenoisingMainWindow::stopDenoising()
+void ReconstructionMainWindow::stopDenoising()
 {
     denoise_worker_->stop();
     camera_worker_->stop();
 }
 
-void DenoisingMainWindow::startCamera()
+void ReconstructionMainWindow::startCamera()
 {
     events_.clear();
     startDenoising();
 }
 
-void DenoisingMainWindow::loadEvents()
+void ReconstructionMainWindow::loadEvents()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Event File"), "", tr("Event Files (*.aer2 *.dat)"));
@@ -328,7 +328,7 @@ void DenoisingMainWindow::loadEvents()
     readevents(fileName.toStdString(),skip_initial_,flipud_);
 }
 
-void DenoisingMainWindow::loadState()
+void ReconstructionMainWindow::loadState()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open State File"), "/home/christian/data/testdata/event_camera_testdata/own_recordings", tr("Image Files (*.npy *.png)"));
@@ -336,14 +336,14 @@ void DenoisingMainWindow::loadState()
     status_bar_->showMessage("Loaded u0",0);
 }
 
-void DenoisingMainWindow::saveState()
+void ReconstructionMainWindow::saveState()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save State File"),"/home/christian/data/testdata/event_camera_testdata",tr("All Files, no ext (*.*)"));
     denoise_worker_->saveCurrentState(fileName.toStdString());
 }
 
-void DenoisingMainWindow::saveEvents()
+void ReconstructionMainWindow::saveEvents()
 {
     stopDenoising();
     QString fileName = QFileDialog::getSaveFileName(this,
@@ -351,7 +351,7 @@ void DenoisingMainWindow::saveEvents()
     denoise_worker_->saveEvents(fileName.toStdString());
 }
 
-void DenoisingMainWindow::showAbout()
+void ReconstructionMainWindow::showAbout()
 {
     QMessageBox::about(this,"About","Demo application for our publication\n"
                                     "Real-Time Image Reconstruction for Event Cameras using Manifold Regularization\n"
@@ -359,11 +359,11 @@ void DenoisingMainWindow::showAbout()
                                     "    Vision, Learning and Optimization Group, 2016\n");
 }
 
-void DenoisingMainWindow::toggleAdvancedParameters() {
+void ReconstructionMainWindow::toggleAdvancedParameters() {
     advanced_dock_->setVisible(action_view_advanced_->isChecked());
 }
 
-void DenoisingMainWindow::changeDataTerm(int value)
+void ReconstructionMainWindow::changeDataTerm(int value)
 {
     switch(value) {
         case 0: denoise_worker_->setDataTerm(TV_LogEntropy); break;
@@ -373,7 +373,7 @@ void DenoisingMainWindow::changeDataTerm(int value)
     }
 }
 
-void DenoisingMainWindow::readevents(std::string filename,bool skip_events, bool flip_ud)
+void ReconstructionMainWindow::readevents(std::string filename,bool skip_events, bool flip_ud)
 {
     QFileInfo info(filename.c_str());
     events_.clear();
@@ -413,7 +413,7 @@ void DenoisingMainWindow::readevents(std::string filename,bool skip_events, bool
     status_bar_->showMessage(tr("Loaded a file with %1 events").arg(events_.size()),0);
 }
 
-DenoisingMainWindow::DenoisingMainWindow()
+ReconstructionMainWindow::ReconstructionMainWindow()
 {
 
 }

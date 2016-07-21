@@ -1,5 +1,5 @@
-#ifndef DENOISINGMAINWINDOW_H
-#define DENOISINGMAINWINDOW_H
+#ifndef RECONSTRUCTIONMAINWINDOW_H
+#define RECONSTRUCTIONMAINWINDOW_H
 
 #include <QMainWindow>
 #include <QDoubleSpinBox>
@@ -23,13 +23,13 @@
 #include "dvscameraworker.h"
 #endif
 
-class DenoisingMainWindow : public QMainWindow
+class ReconstructionMainWindow : public QMainWindow
 {
     Q_OBJECT
   public:
-    DenoisingMainWindow();
-    DenoisingMainWindow(QWidget *parent, std::vector<Event>& events);
-    ~DenoisingMainWindow();
+    ReconstructionMainWindow();
+    ReconstructionMainWindow(QWidget *parent, std::vector<Event>& events);
+    ~ReconstructionMainWindow();
 
   protected slots:
     void startDenoising();
@@ -102,4 +102,4 @@ class DenoisingMainWindow : public QMainWindow
     bool simple_mode_;
 };
 
-#endif // DENOISINGMAINWINDOW_H
+#endif // RECONSTRUCTIONMAINWINDOW_H
