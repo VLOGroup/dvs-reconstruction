@@ -78,11 +78,6 @@ else(WITH_DAVIS)
         ${CMAKE_CURRENT_SOURCE_DIR}/dvscameraworker.cpp)
 endif(WITH_DAVIS)
 
-SET (TEST_MAIN_FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/denoise_test.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/cnpy.cpp
-)
-
 ##-----------------------------------------------------------------------------
 ## Compiler Flags
 if(WIN32)
@@ -98,5 +93,3 @@ link_directories(/usr/local/lib/x86_64-linux-gnu/) # libcaer
 #target_link_libraries(common ${OpenCV_LIBRARIES} ${OpenCV_LIBS})
 CUDA_ADD_EXECUTABLE(live_reconstruction_gui ${GUI_FILES} ${HEADER_FILES} ${UI_RESOURCES})
 TARGET_LINK_LIBRARIES(live_reconstruction_gui common X11 Qt5::Widgets Qt5::OpenGL caer)
-CUDA_ADD_EXECUTABLE(denoising_test ${TEST_MAIN_FILES} ${HEADER_FILES})
-TARGET_LINK_LIBRARIES(denoising_test ${IU_LIBRARIES} ${CUDA_LIBRARIES} ${Boost_LIBRARIES} common)
