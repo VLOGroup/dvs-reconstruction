@@ -19,16 +19,16 @@ git submodule update --init --recursive
 ~~~
 after cloning.
 
-To compile this code, make sure you first install ImageUtilities with the `iugui`, `iuio` and `iumath` module. Furthermore, this software requires:
+This software requies:
  - GCC >= 4.9
  - CMake >= 3.2
  - Qt >= 5.6
- - Boost (program_options, filesystem, system)
+ - ImageUtilities (https://github.com/VLOGroup/imageutilities) with the `iugui`, `iuio` and `iumath` modules
  - libcaer >=2.0 (https://github.com/inilabs/libcaer)
  - cnpy (https://github.com/rogersce/cnpy)
  - DVS128 or DAVIS240 camera (can also load events from files)
 
- To compile the GUI:
+To compile, first build and install ImageUtilities, then:
  ~~~
 cd cnpy
 cmake .
