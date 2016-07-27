@@ -20,12 +20,12 @@ endif(WITH_OPENMP)
 ##-----------------------------------------------------------------------------
 ## ImageUtilities
 #change the following line to whatever graphics card you have
-set(ImageUtilitiesLight_DIR $ENV{IMAGEUTILITIES_ROOT})
-set(IMAGEUTILITIESLIGHT_PREFER_STATIC_LIBRARIES true)
-find_package(ImageUtilitiesLight REQUIRED COMPONENTS iucore iuio iugui iumath)
-cuda_include_directories(${IMAGEUTILITIESLIGHT_INCLUDE_DIR})
-include_directories(${IMAGEUTILITIESLIGHT_INCLUDE_DIR})
-message(${IMAGEUTILITIESLIGHT_LIBRARIES})
+set(ImageUtilities_DIR $ENV{IMAGEUTILITIES_ROOT})
+set(IMAGEUTILITIES_PREFER_STATIC_LIBRARIES true)
+find_package(ImageUtilities REQUIRED COMPONENTS iucore iuio iugui iumath)
+cuda_include_directories(${IMAGEUTILITIE_INCLUDE_DIR})
+include_directories(${IMAGEUTILITIES_INCLUDE_DIR})
+message(${IMAGEUTILITIES_LIBRARIES})
 
 ##-----------------------------------------------------------------------------
 ## Qt5
@@ -49,7 +49,7 @@ if(WIN32)
 	cuda_add_library(common  ${CUDA_FILES})
 else(WIN32)
   cuda_add_library(common STATIC ${CUDA_FILES})
-  target_link_libraries(common ${IMAGEUTILITIESLIGHT_LIBRARIES})
+  target_link_libraries(common ${IMAGEUTILITIES_LIBRARIES})
 endif(WIN32)
 target_link_libraries(common ${OpenCV_LIBRARIES} ${OpenCV_LIBS})
 
