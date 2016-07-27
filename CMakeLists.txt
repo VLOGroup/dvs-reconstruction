@@ -1,13 +1,8 @@
-## This CMake file assumes the following environment variables to be set:
-# CUDA_SDK_ROOT_DIR
-# MATLAB_ROOT_DIR
-
 PROJECT(LIVE_DVS_RECONSTRUCTION)
 cmake_minimum_required(VERSION 2.8)
 FILE(TO_CMAKE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/" OT_CMAKE_MODULE_PATH)
 SET(CMAKE_MODULE_PATH ${OT_CMAKE_MODULE_PATH})
-#SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-#SET(CMAKE_BUILD_TYPE Release)
+
 OPTION(WITH_OPENMP "Build with Multiprocessor Support" ON)
 OPTION(WITH_DAVIS "Build with support for DAVIS240 instead of DVS128" OFF)
 if(WITH_OPENMP)
@@ -39,10 +34,6 @@ find_package(Qt5Core)
 find_package(Qt5Widgets)
 find_package(Qt5OpenGL)
 qt5_add_resources(UI_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources/resources.qrc)
-
-##-----------------------------------------------------------------------------
-## Boost
-find_package(Boost COMPONENTS program_options filesystem system REQUIRED)
 
 SET(CUDA_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/common.cu
