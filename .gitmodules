@@ -1,0 +1,6 @@
+[submodule "cnpy"]
+	path = cnpy
+	url = https://github.com/rogersce/cnpy
+[submodule "libcaer"]
+	path = libcaer
+	url = https://github.com/inilabs/libcaer.git
