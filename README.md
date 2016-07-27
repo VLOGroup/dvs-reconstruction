@@ -41,7 +41,7 @@ make
 cd ..
 mkdir build
 cd build
-cmake ..
+cmake ../src
 make -j6
  ~~~
 
