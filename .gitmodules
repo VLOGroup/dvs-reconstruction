@@ -4,3 +4,6 @@
 [submodule "libcaer"]
 	path = libcaer
 	url = https://github.com/inilabs/libcaer.git
+[submodule "imageutilities"]
+	path = imageutilities
+	url = https://github.com/VLOGroup/imageutilities.git
