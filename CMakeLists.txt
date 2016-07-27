@@ -50,7 +50,6 @@ SET(CUDA_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/denoise.cu )
 SET(HEADER_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/event.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/scopedtimer.h
   ${CMAKE_CURRENT_SOURCE_DIR}/common.h
   ${CMAKE_CURRENT_SOURCE_DIR}/common.cuh
   ${CMAKE_CURRENT_SOURCE_DIR}/denoise.h)
@@ -66,8 +65,7 @@ target_link_libraries(common ${OpenCV_LIBRARIES} ${OpenCV_LIBS})
 SET ( GUI_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/live_reconstruction_gui.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/reconstructionmainwindow.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/denoisingworker.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/cnpy.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/denoisingworker.cpp)
 if(WITH_DAVIS)
   set (GUI_FILES
        ${GUI_FILES}
@@ -92,4 +90,4 @@ endif(WITH_DAVIS)
 link_directories(/usr/local/lib/x86_64-linux-gnu/) # libcaer
 #target_link_libraries(common ${OpenCV_LIBRARIES} ${OpenCV_LIBS})
 CUDA_ADD_EXECUTABLE(live_reconstruction_gui ${GUI_FILES} ${HEADER_FILES} ${UI_RESOURCES})
-TARGET_LINK_LIBRARIES(live_reconstruction_gui common X11 Qt5::Widgets Qt5::OpenGL caer)
+TARGET_LINK_LIBRARIES(live_reconstruction_gui common X11 Qt5::Widgets Qt5::OpenGL caer cnpy)
