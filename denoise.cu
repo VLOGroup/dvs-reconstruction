@@ -19,7 +19,7 @@
 
 #include "denoise.h"
 #include "common.h"
-#include <iu/helper_math.h>
+#include <iu/iuhelpermath.h>
 #include <iu/iuio.h>
 #include <iu/iumath.h>
 
