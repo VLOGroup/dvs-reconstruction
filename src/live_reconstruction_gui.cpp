@@ -22,7 +22,6 @@
 #include "iu/iugui.h"
 
 #include "event.h"
-#include "scopedtimer.h"
 #include "reconstructionmainwindow.h"
 
 int main(int argc, char**argv)
