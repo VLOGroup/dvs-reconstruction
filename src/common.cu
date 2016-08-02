@@ -38,7 +38,7 @@ __global__ void set_events_kernel(iu::ImageGpu_32f_C1::KernelData output, iu::Li
 {
     int event_id = blockIdx.x*blockDim.x + threadIdx.x;
 
-    if(event_id<events.length_) {
+    if(event_id<events.numel_) {
         float4 event = events.data_[event_id];
 //        if(output(round(event.x),round(event.y))<10)
             if(event.z>0)
@@ -52,7 +52,7 @@ __global__ void set_events_kernel(iu::ImageGpu_32f_C1::KernelData output, iu::Im
 {
     int event_id = blockIdx.x*blockDim.x + threadIdx.x;
 
-    if(event_id<events.length_) {
+    if(event_id<events.numel_) {
         float4 event = events.data_[event_id];
         const unsigned int outx = round(event.x);
         const unsigned int outy = round(event.y);
@@ -68,7 +68,7 @@ __global__ void set_timestamps_kernel(iu::ImageGpu_32f_C1::KernelData output, iu
 {
     int event_id = blockIdx.x*blockDim.x + threadIdx.x;
 
-    if(event_id<events.length_) {
+    if(event_id<events.numel_) {
         float4 event = events.data_[event_id];
         output(round(event.x),round(event.y)) = event.w;
     }
