@@ -100,14 +100,14 @@ inline uint divUp(uint a, uint b) { return (a + b - 1) / b; }
 
 void setEvents(iu::ImageGpu_32f_C1 *output,iu::ImageGpu_32f_C1 * old_timestamp, iu::LinearHostMemory_32f_C4 *events_host, float C1, float C2)
 {
-    iu::LinearDeviceMemory_32f_C4 events_gpu(events_host->length());
+    iu::LinearDeviceMemory_32f_C4 events_gpu(events_host->numel());
     iu::copy(events_host,&events_gpu);
 
     int gpu_block_x = GPU_BLOCK_SIZE*GPU_BLOCK_SIZE;
     int gpu_block_y = 1;
 
     // compute number of Blocks
-    int nb_x = divUp(events_gpu.length(),gpu_block_x);
+    int nb_x = divUp(events_gpu.numel(),gpu_block_x);
     int nb_y = 1;
 
     dim3 dimBlock(gpu_block_x,gpu_block_y);
@@ -119,21 +119,21 @@ void setEvents(iu::ImageGpu_32f_C1 *output,iu::ImageGpu_32f_C1 * old_timestamp, 
     CudaCheckError();
 
 //    // get last timestamp
-//    float curr_time = events_host->data(events_host->length()-1)->w;
+//    float curr_time = events_host->data(events_host->numel()-1)->w;
 //    mv::addC(*old_timestamp,-curr_time,*lambda_time);
 //    mv::mulC(*lambda_time,-1.f,*lambda_time);
 }
 
 void setEvents(iu::ImageGpu_32f_C1 *output,iu::ImageGpu_32f_C1 * old_timestamp, iu::ImageGpu_32u_C1 *occurences, iu::LinearHostMemory_32f_C4 *events_host, float C1, float C2)
 {
-    iu::LinearDeviceMemory_32f_C4 events_gpu(events_host->length());
+    iu::LinearDeviceMemory_32f_C4 events_gpu(events_host->numel());
     iu::copy(events_host,&events_gpu);
 
     int gpu_block_x = GPU_BLOCK_SIZE*GPU_BLOCK_SIZE;
     int gpu_block_y = 1;
 
     // compute number of Blocks
-    int nb_x = divUp(events_gpu.length(),gpu_block_x);
+    int nb_x = divUp(events_gpu.numel(),gpu_block_x);
     int nb_y = 1;
 
     dim3 dimBlock(gpu_block_x,gpu_block_y);
@@ -148,14 +148,14 @@ void setEvents(iu::ImageGpu_32f_C1 *output,iu::ImageGpu_32f_C1 * old_timestamp, 
 
 void setEvents(iu::ImageGpu_32f_C1 *output, iu::LinearHostMemory_32f_C4 *events_host, float C1, float C2)
 {
-    iu::LinearDeviceMemory_32f_C4 events_gpu(events_host->length());
+    iu::LinearDeviceMemory_32f_C4 events_gpu(events_host->numel());
     iu::copy(events_host,&events_gpu);
 
     int gpu_block_x = GPU_BLOCK_SIZE*GPU_BLOCK_SIZE;
     int gpu_block_y = 1;
 
     // compute number of Blocks
-    int nb_x = divUp(events_gpu.length(),gpu_block_x);
+    int nb_x = divUp(events_gpu.numel(),gpu_block_x);
     int nb_y = 1;
 
     dim3 dimBlock(gpu_block_x,gpu_block_y);
