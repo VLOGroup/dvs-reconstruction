@@ -24,7 +24,7 @@
 #include <iu/iumath.h>
 
 // defines
-#define GPU_BLOCK_SIZE 32
+#define GPU_BLOCK_SIZE 16
 
 /// ugly global variables
 iu::ImageGpu_32f_C2 *p=NULL;

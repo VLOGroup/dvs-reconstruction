@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#define GPU_BLOCK_SIZE 32
+#define GPU_BLOCK_SIZE 16
 #define TIME_CONSTANT 1e-6f
 
 // IO functions
