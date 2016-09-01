@@ -77,7 +77,7 @@ void loadEvents(std::string filename, std::vector<Event>& events, bool skip_even
 void saveState(std::string filename, const iu::ImageGpu_32f_C1 *mat, bool as_png, bool as_npy)
 {
     iu::ImageCpu_32f_C1 in_cpu(mat->width(),mat->height());
-    IuSize sz = mat->size();
+    iu::Size<2> sz = mat->size();
     const unsigned int shape[] = {sz.width,sz.height};
     iu::copy(mat,&in_cpu);
     if(as_npy) {

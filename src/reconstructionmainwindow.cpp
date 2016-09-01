@@ -54,9 +54,9 @@ ReconstructionMainWindow::ReconstructionMainWindow(QWidget *parent, std::vector<
     mdi_area_ = new QMdiArea(this);
     setCentralWidget(mdi_area_);
 
-    output_win_ = new iu::Qt5ImageGpuWidget(IuSize(width*scale,height*scale),this);
-    events_win_ = new iu::Qt5ImageGpuWidget(IuSize(width*scale,height*scale),this);
-    time_win_ = new iu::Qt5ImageGpuWidget(IuSize(width*scale,height*scale),this);
+    output_win_ = new iu::Qt5ImageGpuWidget(iu::Size<2>(width*scale,height*scale),this);
+    events_win_ = new iu::Qt5ImageGpuWidget(iu::Size<2>(width*scale,height*scale),this);
+    time_win_ = new iu::Qt5ImageGpuWidget(iu::Size<2>(width*scale,height*scale),this);
     QMdiSubWindow* window =  mdi_area_->addSubWindow(output_win_);
     window->setGeometry(QRect(0,0,width*scale+10,height*scale+40));
     window->setWindowTitle("Output Denoised");
