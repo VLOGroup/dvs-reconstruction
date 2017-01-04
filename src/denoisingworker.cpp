@@ -39,7 +39,7 @@ DenoisingWorker::DenoisingWorker(int scale, int width, int height)
     output_time_disp_ = new iu::ImageGpu_32f_C1(width_*scale,height_*scale);
     initial_output_ = NULL;
     C1_ = 1.15;
-    C2_ = 1.3;
+    C2_ = 1.25;
     lambda_ = 90;
     lambda_t_ = 2;
     events_per_image_=1000;
@@ -48,7 +48,7 @@ DenoisingWorker::DenoisingWorker(int scale, int width, int height)
     u0_ = 1.5f;
     u_min_ = 1.f;
     u_max_ = 2.f;
-    method_ = TV_LogEntropy;
+    method_ = TV_LogL2;
 
     debug_ = false;
 }

@@ -23,7 +23,7 @@ enum METHOD {
     TV_L1,
     TV_L2,
     TV_LogL2,
-    TV_LogEntropy,
+    TV_KLD,
 };
 
 namespace  cuda {

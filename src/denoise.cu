@@ -183,8 +183,8 @@ inline __device__ void computeKTP(cudaTextureObject_t tex_m, cudaTextureObject_t
     weight = m_xy.w;
 }
 
-/// Primal kernel for Log-Entropy data term
-__global__ void TVLogEntropy_manifold_primal_kernel(iu::ImageGpu_32f_C1::KernelData g_u, iu::ImageGpu_32f_C1::KernelData g_u_,
+/// Primal kernel for KLD data term
+__global__ void TVKLD_manifold_primal_kernel(iu::ImageGpu_32f_C1::KernelData g_u, iu::ImageGpu_32f_C1::KernelData g_u_,
                                                      cudaTextureObject_t tex_p,iu::ImageGpu_32f_C1::KernelData g_f, cudaTextureObject_t tex_m, float tau, float u_min, float u_max)
 {
     unsigned int x = blockDim.x * blockIdx.x + threadIdx.x;
@@ -202,7 +202,7 @@ __global__ void TVLogEntropy_manifold_primal_kernel(iu::ImageGpu_32f_C1::KernelD
 
         u = u - tau*ktp;    // primal update
         tau *= sqrtf(weight);
-        u = fminf(u_max,fmaxf(u_min,(u-tau+sqrtf(sqr(u-tau)+4*tau*f))/2.f)); // entropy
+        u = fminf(u_max,fmaxf(u_min,(u-tau+sqrtf(sqr(u-tau)+4*tau*f))/2.f)); // KLD
         g_u(x,y) = u;      // write back
         g_u_(x,y) = 2*u-u_;
     }
@@ -402,8 +402,8 @@ void solveTVIncrementalManifold(iu::ImageGpu_32f_C1 *u, iu::ImageGpu_32f_C1 *f, 
             case TV_LogL2:
                 TVLogL2_manifold_primal_kernel<<<dimGrid, dimBlock>>>(*u, *u_, p_manifold->getTexture(), *f, manifold_t->getTexture(), tau, u_min, u_max);
                 break;
-            case TV_LogEntropy:
-                TVLogEntropy_manifold_primal_kernel<<<dimGrid, dimBlock>>>(*u, *u_, p_manifold->getTexture(), *f, manifold_t->getTexture(), tau, u_min, u_max);
+            case TV_KLD:
+                TVKLD_manifold_primal_kernel<<<dimGrid, dimBlock>>>(*u, *u_, p_manifold->getTexture(), *f, manifold_t->getTexture(), tau, u_min, u_max);
                 break;
         }
 

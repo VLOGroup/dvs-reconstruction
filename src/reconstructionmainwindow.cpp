@@ -114,7 +114,7 @@ ReconstructionMainWindow::ReconstructionMainWindow(QWidget *parent, std::vector<
     spin_C2_ = new QDoubleSpinBox;
     spin_C2_->setMinimum(0.0);
     spin_C2_->setSingleStep(0.05);
-    spin_C2_->setValue(1.3);
+    spin_C2_->setValue(1.25);
     spin_u0_ = new QDoubleSpinBox;
     spin_u0_->setMinimum(1e-3);
     spin_u0_->setSingleStep(1e-3);
@@ -179,12 +179,13 @@ ReconstructionMainWindow::ReconstructionMainWindow(QWidget *parent, std::vector<
     QSpacerItem *space = new QSpacerItem(1,1,QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
 
     combo_algorithm_ = new QComboBox();
-    combo_algorithm_->addItem("TV Log Entropy");
+    combo_algorithm_->addItem("TV KLD");
     combo_algorithm_->addItem("TV Log L2");
     combo_algorithm_->addItem("TV L2");
     combo_algorithm_->addItem("TV L1");
     QLabel* label_algorithm = new QLabel("Data Term");
     combo_algorithm_->setToolTip("Select the data term (see paper)");
+    combo_algorithm_->setCurrentIndex(1);
 
     layout->addWidget(label_lambda,           0, 0, 1, 1);
     layout->addWidget(spin_lambda_,           0, 1, 1, 1);
@@ -382,7 +383,7 @@ void ReconstructionMainWindow::toggleAdvancedParameters() {
 void ReconstructionMainWindow::changeDataTerm(int value)
 {
     switch(value) {
-        case 0: denoise_worker_->setDataTerm(TV_LogEntropy); break;
+        case 0: denoise_worker_->setDataTerm(TV_KLD); break;
         case 1: denoise_worker_->setDataTerm(TV_LogL2); break;
         case 2: denoise_worker_->setDataTerm(TV_L2); break;
         case 3: denoise_worker_->setDataTerm(TV_L1); break;
