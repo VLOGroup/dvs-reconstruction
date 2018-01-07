@@ -27,6 +27,10 @@ cuda_include_directories(${IMAGEUTILITIE_INCLUDE_DIR})
 include_directories(${IMAGEUTILITIES_INCLUDE_DIR})
 message(${IMAGEUTILITIES_LIBRARIES})
 
+## Boost
+find_package(Boost COMPONENTS program_options filesystem system REQUIRED)
+
+
 ##-----------------------------------------------------------------------------
 ## Qt5
 set(CMAKE_AUTOMOC ON)
@@ -77,8 +81,14 @@ if(WITH_DAVIS)
   add_definitions("-DDAVIS240")
 endif(WITH_DAVIS)
 
+SET (TEST_MAIN_FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/offline_reconstruction.cpp
+)
+
 
 link_directories(/usr/local/lib/x86_64-linux-gnu/) # libcaer
 #target_link_libraries(common ${OpenCV_LIBRARIES} ${OpenCV_LIBS})
 CUDA_ADD_EXECUTABLE(live_reconstruction_gui ${GUI_FILES} ${HEADER_FILES} ${UI_RESOURCES})
 TARGET_LINK_LIBRARIES(live_reconstruction_gui common X11 Qt5::Widgets Qt5::OpenGL caer cnpy)
+CUDA_ADD_EXECUTABLE(offline_reconstruction ${TEST_MAIN_FILES} ${HEADER_FILES})
+TARGET_LINK_LIBRARIES(offline_reconstruction ${CUDA_LIBRARIES} ${Boost_LIBRARIES} common cnpy)
